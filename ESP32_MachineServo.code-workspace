@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "../../AOG_MachineBoard/ESP32_MachineServo/ESP32_MachineServo"
+		},
+		{
+			"name": "ESP32_Machine",
+			"path": "../../AOG_MachineBoard/ESP32_Machine"
+		},
+		{
+			"name": "ESP32_ISOBUS",
+			"path": "."
+		}
+	],
+	"settings": {}
+}
