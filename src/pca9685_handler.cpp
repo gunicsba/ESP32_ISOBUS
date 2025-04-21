@@ -24,7 +24,7 @@ namespace PCA9685Handler {
         ESP_ERROR_CHECK(pca9685_init(&dev));
         ESP_ERROR_CHECK(pca9685_set_pwm_frequency(&dev, freq_hz));
     
-        ESP_LOGI(TAG, "PCA9685 initialized at 0x40, PWM freq %u Hz", freq_hz);
+        ESP_LOGI(TAG, "PCA9685 initialized at 0x40");
     }
     
     void set_section_state(uint8_t index, bool active) {
