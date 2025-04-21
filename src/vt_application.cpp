@@ -394,7 +394,10 @@ void SeederVtApplication::update()
 void SeederVtApplication::update_pca()
 {
 	for(int i = 0 ; i < sectionControl.get_number_of_sections() ; i++){
-		PCA9685Handler::set_section_state(i, sectionControl.get_section_setpoint_state(i));
+
+		//PCA9685Handler::set_section_state(i, sectionControl.get_section_setpoint_state(i)); //doesn't work with manual mode only with auto
+		//PCA9685Handler::set_section_state(i, sectionControl.get_section_switch_state(i)); //switch state (which is ignored when auto mode is one)
+		PCA9685Handler::set_section_state(i, sectionControl.get_section_actual_state(i)); //		
 	}
 }
 

@@ -16,12 +16,16 @@
  #include <iostream>
  #include <memory>
  #include <driver/twai.h>
+ #include "pca9685_handler.hpp"
 
  extern "C" void app_main()
  {
 	vTaskDelay(1500);
+	PCA9685Handler::init();
+	vTaskDelay(1500);
 	Seeder seederExample;
  	seederExample.initialize();
+	
  
  	while (true)
  	{
