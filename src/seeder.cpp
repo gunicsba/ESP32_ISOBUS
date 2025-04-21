@@ -31,8 +31,6 @@ bool Seeder::initialize()
     // Test LEDs
     for (int i = 0; i < 8; ++i) {
         PCA9685Handler::set_section_state(i, true);
-        vTaskDelay(pdMS_TO_TICKS(200));
-        PCA9685Handler::set_section_state(i, false);
     }
 	// Automatically load the desired CAN driver based on the available drivers
 	std::shared_ptr<isobus::CANHardwarePlugin> canDriver = nullptr;

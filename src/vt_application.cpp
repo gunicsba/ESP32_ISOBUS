@@ -17,6 +17,7 @@
 
 #include <cassert>
 #include <iostream>
+#include "pca9685_handler.hpp"
 
 SeederVtApplication::SeederVtApplication(std::shared_ptr<isobus::PartneredControlFunction> VTPartner, std::shared_ptr<isobus::PartneredControlFunction> TCPartner, std::shared_ptr<isobus::InternalControlFunction> source) :
   TCClientInterface(TCPartner, source, nullptr),
