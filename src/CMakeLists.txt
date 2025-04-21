@@ -1,13 +1,15 @@
 # This file was automatically generated for projects
 # without default 'CMakeLists.txt' file.
 
-FILE(GLOB_RECURSE app_sources ${CMAKE_SOURCE_DIR}/src/*.*)
+FILE(GLOB_RECURSE app_sources *.cpp *.c)
+
+set(EXTRA_COMPONENT_DIRS
+    ${CMAKE_SOURCE_DIR}/.pio/libdeps/esp32s3/esp-idf-lib/components
+)
 
 idf_component_register(
     SRCS ${app_sources}
-    INCLUDE_DIRS "."
-    REQUIRES esp_idf_lib_helpers 
+    INCLUDE_DIRS "include"
     REQUIRES pca9685
-    REQUIRES i2cdev
 )
 target_add_binary_data(${COMPONENT_TARGET} "object_pool/object_pool.iop" BINARY)

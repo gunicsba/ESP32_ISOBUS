@@ -1,5 +1,4 @@
 cmake_minimum_required(VERSION 3.16.0)
-include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 
 include(FetchContent)
 FetchContent_Declare(
@@ -12,6 +11,8 @@ set(EXTRA_COMPONENT_DIRS
     ${espidflib_SOURCE_DIR}/components
     ${CMAKE_SOURCE_DIR}/src
 )
+
+include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 
 project(ESP32_ISOBUS)
 
