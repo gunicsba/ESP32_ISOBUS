@@ -4,7 +4,7 @@
 FILE(GLOB_RECURSE app_sources *.cpp *.c)
 
 set(EXTRA_COMPONENT_DIRS
-    ../.pio/build/esp32s3/_deps/espidflib-src/components
+    ${CMAKE_SOURCE_DIR}/components
 )
 
 idf_component_register(
