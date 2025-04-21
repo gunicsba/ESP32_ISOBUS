@@ -9,8 +9,8 @@ set(EXTRA_COMPONENT_DIRS
 
 idf_component_register(
     SRCS ${app_sources}
-    INCLUDE_DIRS "include"
-    ${espidflib_SOURCE_DIR}/components
+    INCLUDE_DIRS "."
+    ${CMAKE_SOURCE_DIR}/components
     REQUIRES pca9685
 )
 target_add_binary_data(${COMPONENT_TARGET} "object_pool/object_pool.iop" BINARY)
