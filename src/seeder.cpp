@@ -21,30 +21,19 @@
 
 #include <iostream>
 #include <driver/twai.h>
-
-#include "pca9685.h"
-#include "driver/i2c.h"
+#include "pca9685_handler.hpp"
 
 bool Seeder::initialize()
 {
 	bool retVal = true;
+    PCA9685Handler::init();
 
-	i2c_config_t i2conf;
-	i2conf.mode = I2C_MODE_MASTER;
-	i2conf.sda_io_num = GPIO_NUM_8;
-	i2conf.scl_io_num = GPIO_NUM_18;
-	i2conf.sda_pullup_en = GPIO_PULLUP_ENABLE;
-	i2conf.scl_pullup_en = GPIO_PULLUP_ENABLE;
-	i2conf.master.clk_speed = 400000;
-
-	i2c_param_config(I2C_NUM_0, &i2conf);
-	i2c_driver_install(I2C_NUM_0, i2conf.mode, 0, 0, 0);
-
-	pca9685_handle_t pca9685 = pca9685_create(I2C_NUM_0, 0x40, 400000);
-    pca9685_init(pca9685);
-    pca9685_set_pwm_freq(pca9685, 1000);
-    pca9685_set_channel_pwm(pca9685, 0, 0, 2048); // 50% duty
-
+    // Test LEDs
+    for (int i = 0; i < 8; ++i) {
+        PCA9685Handler::set_section_state(i, true);
+        vTaskDelay(pdMS_TO_TICKS(200));
+        PCA9685Handler::set_section_state(i, false);
+    }
 	// Automatically load the desired CAN driver based on the available drivers
 	std::shared_ptr<isobus::CANHardwarePlugin> canDriver = nullptr;
 #if defined(ISOBUS_SOCKETCAN_AVAILABLE)

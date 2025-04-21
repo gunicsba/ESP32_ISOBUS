@@ -393,7 +393,7 @@ void SeederVtApplication::update()
 void SeederVtApplication::update_pca()
 {
 	for(int i = 0 ; i < sectionControl.get_number_of_sections() ; i++){
-		sectionControl.get_section_setpoint_state(i);
+		leds_set_section_state(i, sectionControl.get_section_setpoint_state(i));
 	}
 }
 
