@@ -22,7 +22,7 @@ namespace PCA9685Handler {
     
         ESP_ERROR_CHECK(pca9685_init_desc(&dev, 0x40, I2C_NUM_0, i2c_sda, i2c_scl));
         ESP_ERROR_CHECK(pca9685_init(&dev));
-        ESP_ERROR_CHECK(pca9685_set_pwm_freq(&dev, freq_hz));
+        ESP_ERROR_CHECK(pca9685_set_pwm_frequency(&dev, freq_hz));
     
         ESP_LOGI(TAG, "PCA9685 initialized at 0x40, PWM freq %u Hz", freq_hz);
     }
@@ -31,9 +31,9 @@ namespace PCA9685Handler {
         if (index >= 16) return;
     
         if (active) {
-            pca9685_set_pwm(&dev, index, 0, 4095);  // full on
+            pca9685_set_pwm_value(&dev, index, 4095);  // full on
         } else {
-            pca9685_set_pwm(&dev, index, 0, 0);     // full off
+            pca9685_set_pwm_value(&dev, index, 0);     // full off
         }
     }
     
