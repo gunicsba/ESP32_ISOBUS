@@ -18,19 +18,26 @@
  #include <driver/twai.h>
  #include "pca9685_handler.hpp"
 
+ #include "esp_log.h"
+
  extern "C" void app_main()
  {
-	vTaskDelay(1500);
-	PCA9685Handler::init();
-	vTaskDelay(1500);
+	vTaskDelay(pdMS_TO_TICKS(1000));
+	ESP_LOGI("MAIN", "Application started!");
+	ESP_LOGI("MAIN", "Initializing PCA9685...");
+	PCA9685Handler::init(8, 18); // Explicitly passing pins for clarity
+	vTaskDelay(pdMS_TO_TICKS(500));
+	ESP_LOGI("MAIN", "Initializing Seeder...");
 	Seeder seederExample;
- 	seederExample.initialize();
+	seederExample.initialize();
+	ESP_LOGI("MAIN", "Seeder initialized!");
 	
  
  	while (true)
  	{
  		// CAN stack runs in other threads. Do nothing forever.
  		seederExample.update();
- 		vTaskDelay(10);
+		ESP_LOGI("MAIN", "Heartbeat...");
+ 		vTaskDelay(pdMS_TO_TICKS(1000));
  	}
  }

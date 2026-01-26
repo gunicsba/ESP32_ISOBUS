@@ -194,7 +194,11 @@ void SeederVtApplication::handle_vt_key_events(const isobus::VirtualTerminalClie
 				for (std::uint8_t i = 0; i < NUMBER_ONSCREEN_SECTIONS; ++i)
 				{
 					update_section_objects(i);
+					bool state = sectionControl.get_section_actual_state(i);
+					PCA9685Handler::set_section_state(i, state);
+					PCA9685Handler::set_section_state(i+6, state);
 				}
+				PCA9685Handler::flush(); // Atomic commit
 			}
 			break;
 
@@ -394,11 +398,11 @@ void SeederVtApplication::update()
 void SeederVtApplication::update_pca()
 {
 	for(int i = 0 ; i < sectionControl.get_number_of_sections() ; i++){
-
-		//PCA9685Handler::set_section_state(i, sectionControl.get_section_setpoint_state(i)); //doesn't work with manual mode only with auto
-		//PCA9685Handler::set_section_state(i, sectionControl.get_section_switch_state(i)); //switch state (which is ignored when auto mode is one)
-		PCA9685Handler::set_section_state(i, sectionControl.get_section_actual_state(i)); //		
+		bool state = sectionControl.get_section_actual_state(i);
+		PCA9685Handler::set_section_state(i, state);
+		PCA9685Handler::set_section_state(i+6, state);
 	}
+	PCA9685Handler::flush(); // Atomic commit of all changes
 }
 
 void SeederVtApplication::toggle_section(std::uint8_t sectionIndex)
@@ -406,6 +410,12 @@ void SeederVtApplication::toggle_section(std::uint8_t sectionIndex)
 	sectionControl.set_section_switch_state(sectionIndex, !sectionControl.get_section_switch_state(sectionIndex));
 	TCClientInterface.on_value_changed_trigger(2, static_cast<std::uint16_t>(isobus::DataDescriptionIndex::ActualCondensedWorkState1_16));
 	update_section_objects(sectionIndex);
+	
+	// Immediate LED update for this section
+	bool state = sectionControl.get_section_actual_state(sectionIndex);
+	PCA9685Handler::set_section_state(sectionIndex, state);
+	PCA9685Handler::set_section_state(sectionIndex + 6, state);
+	PCA9685Handler::flush();
 }
 
 void SeederVtApplication::update_section_objects(std::uint8_t sectionIndex)

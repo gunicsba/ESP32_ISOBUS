@@ -12,4 +12,7 @@ void init(uint8_t i2c_sda = 8, uint8_t i2c_scl = 18, uint32_t freq_hz = 1000);
 /// @param active true = on, false = off
 void set_section_state(uint8_t index, bool active);
 
+/// Commits all pending state changes in a single atomic I2C transaction
+void flush();
+
 }

@@ -330,8 +330,8 @@ esp_err_t pca9685_set_pwm_value(i2c_dev_t *dev, uint8_t channel, uint16_t val)
     uint8_t buf[4] = {
         0,
         full_on ? LED_FULL_ON_OFF : 0,
-        raw,
-        full_off ? LED_FULL_ON_OFF | (raw >> 8) : raw >> 8
+        full_off ? 0 : raw,
+        full_off ? LED_FULL_ON_OFF : (full_on ? 0 : (raw >> 8))
     };
 
     I2C_DEV_TAKE_MUTEX(dev);
